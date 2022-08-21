@@ -1,0 +1,41 @@
+{%extends 'blogs/base.html' %}
+    {% block title %}
+        <title>account</title>
+    {% endblock title %}
+    {%block content%}
+        <div class="centerdiv">
+        {% for message in messages %}
+            {{message}}
+        {%endfor%}
+        {{profilepic|safe}}
+        <div class="block center"><span>{{ user.username}}</span><a href="{% url 'edit' %}"><i class='fa fa-edit'></i></a></div>
+        <pre class="block">{{user.about}}</pre>
+        <a href="mailto:{{user.email}}" class="block">{{user.email}}</a>
+        <p class="block">{{user.date_joined}}</p>
+        <details class="block">
+            <summary> my blogs</summary>
+            <ul>
+                {% for post in posts %}
+                <li><a href="">{{post.title}}</a></li>
+                {%endfor%}
+            </ul>
+        </details>
+        <details class="block">
+            <summary> saved blogs</summary>
+            <ul>
+                {% for post in savedblogs %}
+                <li><a href="">{{post.title}}</a></li>
+                {%endfor%}
+            </ul>
+        </details>
+        <details class="block">
+            <summary> liked blogs</summary>
+            <ul>
+                {% for post in likedblogs %}
+                <li><a href="">{{post.title}}</a></li>
+                {%endfor%}
+            </ul>
+        </details>
+        </div>
+        
+    {%endblock content %}

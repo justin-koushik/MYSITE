@@ -1,0 +1,22 @@
+{% extends 'blogs/base.html' %}
+{% block content %}
+<div class="main">
+    <form action="" method="post">
+        {%csrf_token%}
+        <div class="form-group">
+            <label for="{{form.title.id_for_label}}">{{form.title.label}}</label>
+            {{form.title}}
+        </div>
+        <div class="form-group">
+            <label for="{{form.intro.id_for_label}}">{{form.intro.label}}</label>
+            {{form.intro}}
+        </div>
+        <div class="form-group">
+            <label for="{{form.description.id_for_label}}">{{form.description.label}}</label>
+            {{form.description}}
+        </div>
+        <input type="hidden" name="next" value="{{prevpath}}">
+        <button type="submit">save</button>
+    </form>
+</div> 
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'blogs/base.html' %}
+{% block content %}
+<div class="centerdiv">
+    {% if user.id == blog.author.id %}
+        <a href="{% url 'edit' blog.id%}">edit</a>
+    {% endif %}
+    {{blog.title}}
+    {{blog.intro}}
+    {{blog.description.html|safe}}
+    </div>
+{% endblock content %}

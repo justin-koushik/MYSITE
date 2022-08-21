@@ -1,0 +1,85 @@
+{% extends 'blogs\base.html' %}
+    {% block title %}
+    <title>home</title>
+    {% endblock title %}
+    {% block content%}
+    <div class="main">
+        {% for message in messages%}
+            <span class="{{message.tags}} messages">{{message}}</span>
+        {% endfor %}
+            {% for blog in blogs %}
+            <div class="blog" id="{{blog.id}}">
+                <a class="title" href="{% url 'read' blog.id %}">{{blog.title}}</a>
+                <small>{{blog.posted}}</small>
+                <small><a href="">{{blog.author.username}}</a></small>
+                <p class="desc">{{blog.intro|truncatewords:100}}</p>
+                <div class="options">
+                        {% if blog.author.id == user.id %}
+                            <a href="{% url 'edit' blogid=blog.id %}">edit</a>
+                            <a href="{% url 'delete' blogid=blog.id %}" class="delete">delete</a>
+                            likes:{{blog.likes.count}}
+                        {% else %}
+                                <form method="post" action="{% url 'save' blog.id %}" class="save" id="{{blog.id}}">
+                                    {%csrf_token%}
+                                    <input type="hidden" id="task" val={{blog.id}}>
+                                    <button type="submit" id="btn{{blog.id}}">{% if blog in user.saved.all %}{{'unsave'}}{%else%}{{"save"}}{%endif%}</button>
+                                </form>
+
+                                <form method="post" action="{% url 'like' blog.id %}" class="like" id="{{blog.id}}">
+                                    {%csrf_token%}
+                                    <button type="submit" id="like{{blog.id}}">{% if user in blog.likes.all %}{{'unlike'}}{%else%}{{"like"}}{%endif%}</button>
+                                </form>
+                                <span id="count{{blog.id}}">{{blog.likes.count}}</span>
+                        {%endif%}
+                    </div>
+            </div>
+            {% endfor %}
+            <h2 style="text-align:center">no more blogs</h2>
+        </div>
+<script type="text/javascript">
+    $(document).on('submit','.save',function(e){
+        e.preventDefault();
+        const url=$(this).attr('action')
+        const blogid=$(this).attr('id')
+        const btntext=$(`#btn${blogid}`).text()
+        $.ajax({
+            type:'POST',
+            url:url,
+            data:{
+                'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success:(response)=>{
+                if(btntext==='save'){
+                    $(`#btn${blogid}`).text('unsave')
+                }else{
+                    $(`#btn${blogid}`).text('save')
+                }
+            }
+        })
+    });
+    $(document).on('submit','.like',function(e){
+        e.preventDefault();
+        const url2=$(this).attr('action')
+        const blogid=$(this).attr('id')
+        const btntext=$(`#like${blogid}`).text()
+        const nlikes=parseInt($(`#count${blogid}`).text())
+        $.ajax({
+            type:'POST',
+            url:url2,
+            data:{
+                'csrfmiddlewaretoken':$('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success:(response)=>{
+                if(btntext==='like'){
+                    $(`#like${blogid}`).text('unlike')
+                    $(`#count${blogid}`).text(nlikes+1)
+                }else{
+                    $(`#like${blogid}`).text('like')
+                    $(`#count${blogid}`).text(nlikes-1)
+                }
+            }
+        });
+    })
+    $
+    </script>
+    {% endblock content %}

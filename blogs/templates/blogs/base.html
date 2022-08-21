@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'blogs/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> -->
+    {% include 'django_quill/media.html' %}
+    {% block title %}
+    {% endblock title %}
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'blog' %}" >pieit</a></h1>
+        <div class="nav">
+            <a href="{% url 'blog' %}" class="{{homeActive}}">home</a>
+            <a href="{% url 'myself' %}" class="{{accActive}}"><span><i class="fa fa-user-circle"></i><span>{{user.username}}</span></span></a>
+            <a href="{% url 'newblog' %}" class="{{editActive}}">create blog</a>
+            <p id="logout">logout</p>
+        </div>
+    </header>
+    {% block content %}
+    {% endblock content %}
+    <!-- <script src="{% static 'django_quill/django_quill.js' %}"></script> -->
+    <script>
+        $('#logout').on('click',()=>{
+            if(confirm('do u want to logout?')==true){
+                window.location.replace("{% url 'logout' %}")
+            }
+        })
+    </script>
+</html>

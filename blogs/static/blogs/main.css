@@ -111,6 +111,7 @@ span.success{
     top:80px;
     text-align: justify;
     line-height: 25px;
+    word-wrap: break-word;
 }
 .centerdiv svg{
     display: block;

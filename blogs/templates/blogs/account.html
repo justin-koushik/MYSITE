@@ -16,7 +16,7 @@
             <summary> my blogs</summary>
             <ul>
                 {% for post in posts %}
-                <li><a href="">{{post.title}}</a></li>
+                <li><a href="{% url 'read' post.id %}">{{post.title}}</a></li>
                 {%endfor%}
             </ul>
         </details>
@@ -24,7 +24,7 @@
             <summary> saved blogs</summary>
             <ul>
                 {% for post in savedblogs %}
-                <li><a href="">{{post.title}}</a></li>
+                <li><a href="{% url 'read' post.id %}">{{post.title}}</a></li>
                 {%endfor%}
             </ul>
         </details>
@@ -32,7 +32,7 @@
             <summary> liked blogs</summary>
             <ul>
                 {% for post in likedblogs %}
-                <li><a href="">{{post.title}}</a></li>
+                <li><a href="{% url 'read' post.id %}">{{post.title}}</a></li>
                 {%endfor%}
             </ul>
         </details>

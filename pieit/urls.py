@@ -20,7 +20,7 @@ from django.contrib.auth.views import PasswordChangeView,PasswordResetView,Passw
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",include("blogs.urls")),
-    path('myaccount/changePassword',PasswordChangeView.as_view(template_name='accounts/password.html', success_url='/myaccount/'),name='changePassword'),
+    path('myaccount/changePassword',PasswordChangeView.as_view(template_name='accounts/password.html', success_url='/myaccount/',),name='changePassword'),
     path("register/",account.register,name='register'),
     path('myaccount/',account.myaccount,name='myself'),
     path('myaccount/edit',account.editProfile,name='edit'),

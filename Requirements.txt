@@ -1,0 +1,3 @@
+django
+multiavatar
+django-quill-editor
